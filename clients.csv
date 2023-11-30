@@ -1,0 +1,22 @@
+_id,clientName,clientEmail,clientIncomePerMonth,clientSavingsPerMonth,clientMobileNum,clientAddress
+65602175b69284d124fc0032,John Doe,john.doe@example.com,5000,1000,1234567890,"{
+  street: 'StreetName',
+  city: 'CityName',
+  state: 'StateName',
+  country: 'CountryName',
+  pinCode: 9400
+}"
+656086f02742238bd1566d30,Karan singla,karan.singla@example.com,5000,1000,9257036000,"{
+  street: 'StreetName',
+  city: 'CityName',
+  state: 'StateName',
+  country: 'CountryName',
+  pinCode: 9400
+}"
+6560f8b58b28026309c11117,Karan singla,karan.singla@gmail.com,5000,1000,9876625005,"{
+  street: 'StreetName',
+  city: 'CityName',
+  state: 'StateName',
+  country: 'CountryName',
+  pinCode: 9400
+}"

@@ -1,0 +1,108 @@
+version: '3'
+services:
+  # Service for the Express application handling slang translation
+  translation-service:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - ./path/to/translation-service:/app
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://translation-db:27017
+    ports:
+      - "3000:3000"
+    command: "npm start"
+
+  # Service for the Express application handling client information
+  client-info-service:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - ./path/to/client-info-service:/app
+    environment:
+      - PORT=3010
+      - MONGODB_URI=mongodb://client-info-db:27017
+      - REDIS_HOST=redis
+    ports:
+      - "3010:3010"
+    command: "npm start"
+
+  # Service for the Express application handling CSV export
+  csv-export-service:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - ./path/to/csv-export-service:/app
+    environment:
+      - PORT=3005
+      - MONGODB_URI=mongodb://csv-export-db:27017
+    ports:
+      - "3005:3005"
+    command: "npm start"
+
+  # Service for the Express application handling SMS and RabbitMQ
+  sms-service:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - ./path/to/sms-service:/app
+    environment:
+      - PORT=3003
+      - MONGODB_URI=mongodb://sms-db:27017
+      - TWILIO_ACCOUNT_SID=AC9588e1c040f1bcb07bf4db7c1ead9a08
+      - TWILIO_AUTH_TOKEN=0ba892b8a406fb156df1b021f25ee589
+      - TWILIO_PHONE_NUMBER=+14695572889
+    ports:
+      - "3003:3003"
+    depends_on:
+      - rabbitmq
+    command: "npm start"
+
+  # MongoDB containers for each service
+  translation-db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - translation-data:/data/db
+
+  client-info-db:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    volumes:
+      - client-info-data:/data/db
+
+  csv-export-db:
+    image: mongo:latest
+    ports:
+      - "27019:27017"
+    volumes:
+      - csv-export-data:/data/db
+
+  sms-db:
+    image: mongo:latest
+    ports:
+      - "27020:27017"
+    volumes:
+      - sms-data:/data/db
+
+  # RabbitMQ container
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # Redis container
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+
+volumes:
+  translation-data:
+  client-info-data:
+  csv-export-data:
+  sms-data:
